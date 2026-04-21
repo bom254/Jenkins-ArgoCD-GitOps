@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	tools {
-		nodejs 'NodeJS'
+		nodejs 'NodeJs'
 	}
 	environment {
 		DOCKER_HUB_REPO = 'iquantc/iquant-app'
