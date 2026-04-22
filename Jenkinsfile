@@ -3,6 +3,9 @@ pipeline {
 	tools {
 		nodejs 'NodeJs'
 	}
+	environment {
+		DOCKER_HUB_REPO = 'b00mgr3rt/gitops-containerhub'
+	}
 	stages {
 		stage('Checkout Github'){
 			steps {
@@ -21,6 +24,7 @@ pipeline {
 			steps {
 				script {
 					echo 'building docker image...'
+					docker.build("${DOCKER_HUB_REPO}:latest")
 				}
 			}
 		}
