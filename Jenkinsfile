@@ -5,6 +5,7 @@ pipeline {
 	}
 	environment {
 		DOCKER_HUB_REPO = 'b00mgr3rt/gitops-containerhub'
+		DOCKER_HUB_CREDENTIALS_ID = 'gitops_container'
 	}
 	stages {
 		stage('Checkout Github'){
@@ -24,7 +25,7 @@ pipeline {
 			steps {
 				script {
 					echo 'building docker image...'
-					docker.build("${DOCKER_HUB_REPO}:latest")
+					dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
 				}
 			}
 		}
@@ -38,9 +39,12 @@ pipeline {
 			steps {
 				script {
 					echo 'pushing docker image to DockerHub...'
+					docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_HUB_CREDENTIALS_ID}"){
+						dockerImage.push('latest')
 					}
 				}
 			}
+		}
 		stage('Install ArgoCD CLI'){
 			steps {
 				sh '''
@@ -54,10 +58,10 @@ pipeline {
 					sh '''
 					echo 'synchronizing app with ArgoCD...'
 					'''
-					}
 				}
 			}
 		}
+	}
 
 	post {
 		success {
