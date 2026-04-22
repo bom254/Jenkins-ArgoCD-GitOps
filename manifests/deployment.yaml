@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: node-app
-        image: iquantc/iquant-app:latest
+        image: b00mgr3rt/gitops-containerhub:latest
         ports:
         - containerPort: 3000
 
