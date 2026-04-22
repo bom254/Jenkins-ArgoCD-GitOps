@@ -4,8 +4,8 @@ pipeline {
 		nodejs 'NodeJs'
 	}
 	environment {
-		DOCKER_HUB_REPO = 'b00mgr3rt/gitops-containerhub'
-		DOCKER_HUB_CREDENTIALS_ID = 'gitops_container'
+		DOCKER_HUB_REPO = 
+		DOCKER_HUB_CREDENTIALS_ID = 
 	}
 	stages {
 		stage('Checkout Github'){
@@ -49,15 +49,18 @@ pipeline {
 			steps {
 				sh '''
 				echo 'installing ArgoCD cli...'
+				curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+				chmod +x /usr/local/bin/argocd
 				'''
 			}
 		}
 		stage('Apply Kubernetes Manifests & Sync App with ArgoCD'){
 			steps {
 				script {
+					kubeconfig(credentialsId: 'kubeconfig', serverUrl: 
+'
 					sh '''
-					echo 'synchronizing app with ArgoCD...'
-					'''
+					argocd login 
 				}
 			}
 		}
