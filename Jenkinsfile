@@ -7,7 +7,8 @@ pipeline {
 		stage('Checkout Github'){
 			steps {
 			git branch: 'main', credentialsId: 'GitOps', url: 'https://github.com/bom254/Jenkins-ArgoCD-GitOps.git' 
-		}		
+			}
+		}	
 		stage('Install node dependencies'){
 			steps {
 				sh '''
@@ -55,13 +56,12 @@ pipeline {
 			}
 		}
 
-		post {
-			success {
-				echo 'Build&Deploy completed succesfully!'
-			}
-			failure {
-				echo 'Build&Deploy failed. Check logs.'
-			}
+	post {
+		success {
+			echo 'Build&Deploy completed succesfully!'
+		}
+		failure {
+			echo 'Build&Deploy failed. Check logs.'
 		}
 	}
 }
