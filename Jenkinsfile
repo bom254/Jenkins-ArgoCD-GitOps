@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	tools {
-		nodejs 'NodeJS'
+		nodejs 'NodeJs'
 	}
 	stages {
 		stage('Checkout Github'){
@@ -55,12 +55,13 @@ pipeline {
 			}
 		}
 
-	post {
-		success {
-			echo 'Build&Deploy completed succesfully!'
-		}
-		failure {
-			echo 'Build&Deploy failed. Check logs.'
+		post {
+			success {
+				echo 'Build&Deploy completed succesfully!'
+			}
+			failure {
+				echo 'Build&Deploy failed. Check logs.'
+			}
 		}
 	}
 }
